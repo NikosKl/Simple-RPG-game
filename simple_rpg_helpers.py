@@ -38,11 +38,11 @@ def decide_turn(player, enemy):
 
 def combat(attacker, defender, player, enemy):
     round_counter = 0
-    #combat_info = input('\nPress x to start the combat: ')
-    #if combat_info.lower() == 'x':
-    player.show_info()
-    print('\nversus\n')
-    enemy.show_info()
+    combat_info = input('\nPress x to start the combat: ')
+    if combat_info.lower() == 'x':
+        player.show_info()
+        print('\nversus\n')
+        enemy.show_info()
     combat_start = input('\nPress x to start the combat: ')
     if combat_start.lower() == 'x':
         while attacker.is_alive() and defender.is_alive():
