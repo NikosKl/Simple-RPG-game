@@ -1,4 +1,4 @@
-from simple_rpg_helpers import player_info, enemy_info, decide_turn, combat
+from simple_rpg_helpers import player_info, lvl1_enemy, lvl2_enemy, boss, decide_turn, combat, get_valid_input
 
 class Character:
     def __init__(self, name, hp, attack_power):
@@ -34,13 +34,24 @@ class Enemy(Character):
 
 # Character info
 p_name, p_hp, p_power = player_info()
-e_name, e_hp, e_power = enemy_info()
 player = Player(p_name, p_hp, p_power)
-enemy = Enemy(e_name, e_hp, e_power)
 player.show_info()
 
-# Dice roll for turn decision
-attacker, defender = decide_turn(player, enemy)
-# combat
-combat(attacker, defender, player, enemy)
+all_enemies = []
 
+lvl1_stats = lvl1_enemy()
+all_enemies.extend([Enemy(name, hp, power) for (name, hp, power) in lvl1_stats])
+
+lvl2_stats = lvl2_enemy()
+all_enemies.extend([Enemy(name, hp, power) for (name, hp, power) in lvl2_stats])
+
+boss_stats = boss()
+all_enemies.append(Enemy(*boss_stats))
+
+for enemy in all_enemies:
+    if not player.is_alive():
+        break
+    # Dice roll for turn decision
+    attacker, defender = decide_turn(player, enemy)
+    # combat
+    combat(attacker, defender, player, enemy)

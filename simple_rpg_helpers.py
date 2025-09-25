@@ -1,18 +1,54 @@
 import random
 
+# input validation
+def get_valid_input(prompt, options):
+    while True:
+        user_input = input(prompt).strip().lower()
+        if user_input not in options:
+            print('\nInvalid input, try again')
+        else:
+            return user_input
+        
+# valid name
+def get_valid_name(prompt):
+    while True:
+        user_input = input(prompt).strip()
+        if user_input.isalpha():
+            return user_input
+        else:
+            print('\nName cannot contain blank spaces, numbers, puncuations. Please type again.')
+
 # player information
 def player_info():
-    player_name = input('\nPlease insert the name of your player: ').capitalize()
+    player_name = get_valid_name('\nPlease insert the name of your player: ').capitalize()
     player_hp = random.randint(10,15)
     player_power = random.randint(3,5)
     return player_name, player_hp, player_power
 
-# enemy information
-def enemy_info():
-    enemy_name = 'lvl[1] Goblin'
-    enemy_hp = random.randint(12,15)
-    enemy_power = random.randint(3,4)
-    return enemy_name, enemy_hp, enemy_power
+# List of Enemies
+def lvl1_enemy():
+    enemies = []
+    for i in range(2):
+        name = 'lvl[1] Goblin Soldier'
+        hp = random.randint(3,4)
+        power = random.randint(2,3)
+        enemies.append((name, hp, power))
+    return enemies
+
+def lvl2_enemy():
+    enemies = []
+    for i in range(2):
+        name = 'lvl[2] Goblin Grunt'
+        hp = random.randint(4,5)
+        power = random.randint(3,4)
+        enemies.append((name, hp, power))
+    return enemies
+
+def boss():
+    name = 'Goblin Captain'
+    hp = 8
+    power = 5
+    return name, hp, power
 
 # Who attacks first
 def decide_turn(player, enemy):
@@ -36,28 +72,29 @@ def decide_turn(player, enemy):
             print('Its a tie, u need to roll the dice again')
             continue
 
+# Combat mode
 def combat(attacker, defender, player, enemy):
     round_counter = 0
-    combat_info = input('\nPress x to start the combat: ')
-    if combat_info.lower() == 'x':
-        player.show_info()
-        print('\nversus\n')
-        enemy.show_info()
-    combat_start = input('\nPress x to start the combat: ')
-    if combat_start.lower() == 'x':
-        while attacker.is_alive() and defender.is_alive():
-            round_counter += 1
-            print(f'\n-- Round: {round_counter} --\n')
-            attacker.attack(defender)
-            if defender.is_alive():
-                defender, attacker = attacker, defender
+    combat_info = get_valid_input('\nPress x to see the combat info: ', ['x'])
+    player.show_info()
+    print('\nversus')
+    enemy.show_info()
+    combat_start = get_valid_input('\nPress x to start the combat: ', ['x'])
+    while attacker.is_alive() and defender.is_alive():
+        round_counter += 1
+        print(f'\n-- Round: {round_counter} --\n')
+        attacker.attack(defender)
+        if defender.is_alive():
+            defender, attacker = attacker, defender
+        else:
+            print('\n--- Combat Ended ---')
+            print(f'\n{attacker.name} is victorious!!!')
+            if attacker.name == player.name:
+                print(f'\nALERT!: {attacker.name} remaining HP: {attacker.hp}')
+                return attacker
             else:
-                print('\n--- Combat Ended ---')
-                print(f'\n{attacker.name} is victorious!!!')
-                if attacker.name == player.name:
-                    print(f'\nALERT!: {attacker.name} remaining HP: {attacker.hp}')
-                    return attacker
-                else:
-                    print('Game Over...')
-    else:
-        print('Wrong input, Please type "x".')
+                print('\nThe hero has fallen.')
+                print('\nGame Over...')
+                return defender
+                
+    
