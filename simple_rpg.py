@@ -27,8 +27,27 @@ class Character:
         print(f'Attack Power: {self.attack_power}')
         
 class Player(Character):
-    pass
 
+    def __init__(self, name, hp, attack_power):
+        super().__init__(name, hp, attack_power)
+        self.inventory = ['Potion', 'Potion', 'Potion']
+        self.max_hp = hp
+
+    def __len__(self):
+        return len(self.inventory)
+    
+    def use_potion(self):
+        if 'Potion' in self.inventory:
+            heal_amount = round(self.max_hp * 0.3)
+            self.hp += heal_amount
+            if self.hp > self.max_hp:
+                self.hp = self.max_hp
+            print(f'You got healed for {heal_amount} HP by using a Potion!')
+            player.inventory.remove('Potion')
+        else:
+            print('There is no Potions in the inventory...')
+
+    
 class Enemy(Character):
     pass
 
@@ -36,6 +55,8 @@ class Enemy(Character):
 p_name, p_hp, p_power = player_info()
 player = Player(p_name, p_hp, p_power)
 player.show_info()
+
+print(f'Inventory: {len(player)} Potions')
 
 all_enemies = []
 
@@ -48,10 +69,20 @@ all_enemies.extend([Enemy(name, hp, power) for (name, hp, power) in lvl2_stats])
 boss_stats = boss()
 all_enemies.append(Enemy(*boss_stats))
 
-for enemy in all_enemies:
+for i, enemy in enumerate(all_enemies):
     if not player.is_alive():
         break
     # Dice roll for turn decision
     attacker, defender = decide_turn(player, enemy)
     # combat
     combat(attacker, defender, player, enemy)
+
+    if not player.is_alive():
+        break
+
+    if i < len(all_enemies) - 1:
+        if player.hp < player.max_hp and len(player.inventory) > 0:
+            print(f'\nALERT!: {player.name} remaining HP: {player.hp}')
+            print('\nA potion will be used to replenish your hp')
+            player.use_potion()
+            print(f'Inventory: {len(player)} Potions left')

@@ -85,16 +85,16 @@ def combat(attacker, defender, player, enemy):
         print(f'\n-- Round: {round_counter} --\n')
         attacker.attack(defender)
         if defender.is_alive():
+            if defender.name == player.name and len(defender.inventory) > 0 and defender.hp < (round(defender.max_hp * 0.7)):
+                print(f'\n{defender.name} HP is below 30%, a potion will be used')
+                defender.use_potion()
+                print(f'\nHP: {defender.hp}')
             defender, attacker = attacker, defender
         else:
             print('\n--- Combat Ended ---')
             print(f'\n{attacker.name} is victorious!!!')
-            if attacker.name == player.name:
-                print(f'\nALERT!: {attacker.name} remaining HP: {attacker.hp}')
-                return attacker
-            else:
+            if attacker.name != player.name:
                 print('\nThe hero has fallen.')
                 print('\nGame Over...')
-                return defender
                 
     
