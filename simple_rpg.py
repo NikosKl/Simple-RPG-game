@@ -1,4 +1,5 @@
 from simple_rpg_helpers import player_info, lvl1_enemy, lvl2_enemy, boss, decide_turn, combat, get_valid_input
+import random
 
 class Character:
     def __init__(self, name, hp, attack_power):
@@ -49,9 +50,12 @@ class Player(Character):
 
     
 class Enemy(Character):
-    pass
+    def __init__(self, name, hp, attack_power, drop_chance):
+        super().__init__(name, hp, attack_power)
+        self.drop_chance = drop_chance
 
 # Character info
+potion_drop_chance = 0.3
 p_name, p_hp, p_power = player_info()
 player = Player(p_name, p_hp, p_power)
 player.show_info()
@@ -61,10 +65,10 @@ print(f'Inventory: {len(player)} Potions')
 all_enemies = []
 
 lvl1_stats = lvl1_enemy()
-all_enemies.extend([Enemy(name, hp, power) for (name, hp, power) in lvl1_stats])
+all_enemies.extend([Enemy(name, hp, power, potion_drop_chance) for (name, hp, power, potion_drop_chance) in lvl1_stats])
 
 lvl2_stats = lvl2_enemy()
-all_enemies.extend([Enemy(name, hp, power) for (name, hp, power) in lvl2_stats])
+all_enemies.extend([Enemy(name, hp, power, potion_drop_chance) for (name, hp, power, potion_drop_chance) in lvl2_stats])
 
 boss_stats = boss()
 all_enemies.append(Enemy(*boss_stats))
@@ -79,10 +83,18 @@ for i, enemy in enumerate(all_enemies):
 
     if not player.is_alive():
         break
-
+    # Drops & Potion usage post fight
     if i < len(all_enemies) - 1:
-        if player.hp < player.max_hp and len(player.inventory) > 0:
-            print(f'\nALERT!: {player.name} remaining HP: {player.hp}')
-            print('\nA potion will be used to replenish your hp')
-            player.use_potion()
-            print(f'Inventory: {len(player)} Potions left')
+        if (random.random() < enemy.drop_chance):
+            player.inventory.append('Potion')
+            print(f'\nThe creature dropped a Healing Potion(own: {len(player)}). It will be added to your inventory!')
+        print(f'\nALERT!: {player.name} remaining HP: {player.hp}')
+        if player.hp < player.max_hp and len(player.inventory) > 0: 
+            print(f'\nInventory: {len(player)} Potions left')
+            potion_user_input = get_valid_input('\nDo you want to use a potion? (y/n): ',['y', 'n'])
+            if potion_user_input.lower().strip() == 'y':
+                print('\nA potion will be used to replenish your hp')
+                player.use_potion()
+                print(f'Inventory: {len(player)} Potions left')
+            else:
+                continue

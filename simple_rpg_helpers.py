@@ -32,7 +32,8 @@ def lvl1_enemy():
         name = 'lvl[1] Goblin Soldier'
         hp = random.randint(3,4)
         power = random.randint(2,3)
-        enemies.append((name, hp, power))
+        potion_drop_chance = 0.3
+        enemies.append((name, hp, power, potion_drop_chance))
     return enemies
 
 def lvl2_enemy():
@@ -41,14 +42,16 @@ def lvl2_enemy():
         name = 'lvl[2] Goblin Grunt'
         hp = random.randint(4,5)
         power = random.randint(3,4)
-        enemies.append((name, hp, power))
+        potion_drop_chance = 0.4
+        enemies.append((name, hp, power, potion_drop_chance))
     return enemies
 
 def boss():
     name = 'Goblin Captain'
     hp = 8
     power = 5
-    return name, hp, power
+    potion_drop_chance = 0
+    return name, hp, power, potion_drop_chance
 
 # Who attacks first
 def decide_turn(player, enemy):
@@ -88,7 +91,6 @@ def combat(attacker, defender, player, enemy):
             if defender.name == player.name and len(defender.inventory) > 0 and defender.hp < (round(defender.max_hp * 0.7)):
                 print(f'\n{defender.name} HP is below 30%, a potion will be used')
                 defender.use_potion()
-                print(f'\nHP: {defender.hp}')
             defender, attacker = attacker, defender
         else:
             print('\n--- Combat Ended ---')
