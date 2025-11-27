@@ -61,10 +61,9 @@ It features random enemy encounters, loot drops, equipment, level progression an
 
 ![Combat Example](assets/combat.png)
 
-### Save game 
+### Save Game Examples 
 
 ![Save game](assets/save_game1.png)
-![Save game example](assets/save_game2.png)
 
 ## Installation & Setup
 
@@ -83,11 +82,15 @@ source venv/bin/activate # on macOS/Linux
 venv\Scripts\activate # on Windows
 ```
 
-3. **Install Dependencies**\
+3. **Install Dependencies**
+```bash
 pip install -r requirements.txt
+```
 
-4. **Run the game**\
+4. **Run the game**
+```bash
 python main.py
+```
 
 ## Project Structure
 
@@ -142,14 +145,14 @@ Close the game
     - You and the enemies take turns attacking
     - Critical hits, weapon damage rolls and shield blocks may occur with weapon equipped
     - If your HP falls below 40% and there is a potion, you'll automatically use it
-    - After each fight, you get to decide if you want to usually a potion manually
+    - After each fight, you get to decide if you want to use a potion manually
 
 5. Loot & Equipment
 - Enemies may drop on defeat:
     - Potions
     - Main-Hand Weapons
     - Off-hand Weapons
-- If you dont have a weapon equipped it will automatically get equipped, else you can choose to skip
+- If you don't have a weapon equipped it will automatically get equipped, else you can choose to skip
 
 6. Leveling System
 - Defeating enemies grants EXP
