@@ -14,7 +14,7 @@ def game_complete() -> None:
     print('\n                VICTORY                \n')
     print('=========================================')
     print('\nCongratulations! You have cleared the game!')
-    print('\n\nThanks for trying Simple_RPG!\n')
+    print('\n\nThanks for trying Simple RPG!\n')
     print('=========================================')
         
 def divider() -> None:

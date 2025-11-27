@@ -1,0 +1,22 @@
+{
+    "player": {
+        "level": 2,
+        "name": "Pepito",
+        "hp": 17,
+        "max_hp": 17,
+        "attack_power": 4,
+        "exp": 3,
+        "exp_to_next_lvl": 12,
+        "consumables": [
+            "Potion",
+            "Potion",
+            "Potion"
+        ],
+        "equipped_weapon": "Dagger",
+        "equipped_shield": null,
+        "weapon_inventory": [
+            "Dagger"
+        ]
+    },
+    "enemy_index": 2
+}
