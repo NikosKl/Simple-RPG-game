@@ -46,10 +46,8 @@ It features random enemy encounters, loot drops, equipment, level progression an
 ## Technologies Used
 
 - **Python 3.10+**
-- **JSON** for save/load system
-- **Tabulate** for table formatting
-- **Random** Enemy generation, damage rolls 
-- **Time module** delays, UI pace
+- **JSON** (save/load system)
+- **Tabulate** (table formatting)
 
 ## Demo
 
