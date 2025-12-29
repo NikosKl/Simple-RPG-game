@@ -39,7 +39,7 @@ def decide_turn(player: Any, enemy: Any) -> tuple[Any, Any]:
             divider()
             continue
 
-def combat(attacker: Any, defender: Any, player: Any, enemy: Any) -> None:
+def combat(attacker: Any, defender: Any, player: Player, enemy: Enemy) -> None:
     ''' Combat logic '''
     round_counter = 0
     get_valid_input('\nPress [x] to see the combat info: ', ['x'])
@@ -167,7 +167,11 @@ def start_new_game() -> None:
 # Load saved game function
 def start_loaded_game() -> None:
     ''' Loading saved progress '''
-    player, index = load_game()
+    load = load_game()
+    if load is None:
+        print('\nNo saved game found.')
+        return
+    player, index = load
     player.show_info()
     all_enemies = generate_enemies()
     start_combat_loop(player, all_enemies, index)

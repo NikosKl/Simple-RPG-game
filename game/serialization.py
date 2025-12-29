@@ -32,7 +32,7 @@ def save_game(player: Player, current_index: int) -> object | int:
 def load_game() -> tuple | None:
     if not os.path.exists('save_game.json'):
        print("\nSave not found")
-       return 
+       return None
     try:
         with open('save_game.json', 'r') as saved_data:
            data = json.load(saved_data)
