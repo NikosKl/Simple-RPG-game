@@ -20,12 +20,12 @@ def elite_enemies() -> tuple[str, int, int, float, int, list]:
     ]
     return random.choice(elites)
 
-def boss() -> tuple[str, int, int, float, int, list]:
+def boss() -> tuple[str, int, int, float, int, list[str]]:
     name = 'Chimera'
     hp = random.randint(20,25)
     power = random.randint(7,8)
     potion_drop_chance = 0
-    drop_table = []
+    drop_table: list[str] = []
     exp = 0
     return name, hp, power, potion_drop_chance, exp, drop_table
 
